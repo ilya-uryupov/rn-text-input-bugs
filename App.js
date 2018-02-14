@@ -5,19 +5,7 @@
  */
 
 import React, { Component } from 'react'
-import {
-  Platform,
-  StyleSheet,
-  Text, TextInput,
-  View, ViewPagerAndroid
-} from 'react-native'
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-       'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-           'Shake or press menu button for dev menu'
-})
+import { StyleSheet, Text, TextInput, View, ViewPagerAndroid } from 'react-native'
 
 const rnVersion = '0.52.0'
 
@@ -26,67 +14,87 @@ export default class App extends Component<{}> {
     super(props)
 
     this.state = {
-      testText: '',
-      testText2: '',
-      testText3: '',
-      testText4: ''
+      text1: '',
+      text2: '',
+      text3: '',
+      text4: '',
+      text5: '',
+      text6: '',
+      testWidth: '99%'
     }
   }
 
-  onChangeText = text => {
-    this.setState({testText: text})
-  }
+  onChangeText = index =>
+    text => {
+      this.setState({[`text${index}`]: text})
+    }
 
-  onChangeText2 = text => {
-    this.setState({testText2: text})
-  }
-
-  onChangeText3 = text => {
-    this.setState({testText3: text})
-  }
-
-  onChangeText4 = text => {
-    this.setState({testText4: text})
+  componentDidMount () {
+    setTimeout(() => {
+      this.setState({testWidth: '100%'})
+    }, 100)
   }
 
   render () {
     return (
       <ViewPagerAndroid
-        peekEnabled={false}
-        scrollEnabled={true}
+        keyboardShouldPersistTaps={'handled'}
         style={{flex: 1}}
       >
-        <View key={'123213'} style={styles.container}>
+        {/*First tab*/}
+        <View key={'123213'} style={styles.container} keyboardShouldPersistTaps={'handled'}>
           <Text>
-            {`Hello there, imma first tab, RN version: ${rnVersion}`}
+            {`React Native version: ${rnVersion}`}
+          </Text>
+
+          <Text>
+            {'First tab, there is another one on the right ==>'}
           </Text>
 
           <View style={styles.inputsWrap}>
             <TextInput
-              value={this.state.testText} onChangeText={this.onChangeText}
-              placeholder={'You can paste here'}
+              value={this.state.text1} onChangeText={this.onChangeText(1)}
+              placeholder={'Single-line, you can copy-paste here'}
             />
+
             <TextInput
-              value={this.state.testText2} onChangeText={this.onChangeText2}
+              value={this.state.text2} onChangeText={this.onChangeText(2)}
               multiline
-              placeholder={'But not here'}
+              placeholder={'Multi-line, can\'t copy-paste'}
+            />
+
+            <TextInput
+              value={this.state.text3} onChangeText={this.onChangeText(3)}
+              multiline
+              placeholder={'Multiline with hacks, can copy-paste'}
+              style={{width: this.state.testWidth}}
             />
           </View>
         </View>
-        <View key={'asdasd'} style={styles.container}>
+
+        {/*Second tab*/}
+        <View key={'asdasd'} style={styles.container} keyboardShouldPersistTaps={'handled'}>
           <Text>
-            {'Hello there, imma second tab'}
+            {'Second tab'}
           </Text>
 
           <View style={styles.inputsWrap}>
             <TextInput
-              value={this.state.testText3} onChangeText={this.onChangeText3}
-              placeholder={'You can paste here'}
+              value={this.state.text4} onChangeText={this.onChangeText(4)}
+              placeholder={'Single-line, you can copy-paste here'}
             />
+
             <TextInput
-              value={this.state.testText4} onChangeText={this.onChangeText4}
+              value={this.state.text5} onChangeText={this.onChangeText(5)}
               multiline
-              placeholder={'But not here'}
+              placeholder={'Multi-line, can\'t copy-paste'}
+            />
+
+            <TextInput
+              value={this.state.text6} onChangeText={this.onChangeText(6)}
+              multiline
+              placeholder={'Multiline with hacks, can copy-paste'}
+              style={{width: this.state.testWidth}}
             />
           </View>
         </View>
